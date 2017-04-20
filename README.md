@@ -12,6 +12,8 @@ This programm take command line argument of argc and argv[]
 To run the program type teminal command 
 
 g++ main.cpp
+
+
 ./a.out data.csv
 
 
