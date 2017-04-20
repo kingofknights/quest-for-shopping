@@ -108,6 +108,7 @@ Shopping::GoShopping()
 	return;
 }
 int x = 0;
+
 void
 Shopping::SearchShopWithItem(std::string filename)
 {
@@ -160,16 +161,37 @@ Shopping::DisplayShopName()
 void
 Shopping::GetCheapPrice()
 {	float temp = -1; int temp2;
-	for (int i = 0; i < x; ++i)
+	if (x == 1)
 	{
-		for (int j = i; j < x; ++j)
+		temp = vectrofstruct[0].pricelist;
+		temp2 = vectrofstruct[0].shopnumber;
+	}
+	else {
+		for (int i = 0; i < x; ++i)
 		{
-			if (vectrofstruct[i].nameofitem != vectrofstruct[j].nameofitem &&
-			        vectrofstruct[i].shopnumber == vectrofstruct[j].shopnumber)
+			for (int j = i; j < x; ++j)
 			{
-				temp = vectrofstruct[i].pricelist + vectrofstruct[j].pricelist;
-				temp2 = vectrofstruct[i].shopnumber;
+				if (vectrofstruct[i].nameofitem != vectrofstruct[j].nameofitem &&
+				        vectrofstruct[i].shopnumber == vectrofstruct[j].shopnumber)
+				{
+					temp = vectrofstruct[i].pricelist + vectrofstruct[j].pricelist;
+					temp2 = vectrofstruct[i].shopnumber;
 
+				}
+				if (vectrofstruct[i].nameofitem == vectrofstruct[j].nameofitem &&
+				        vectrofstruct[i].shopnumber != vectrofstruct[j].shopnumber)
+				{
+					if (vectrofstruct[i].pricelist > vectrofstruct[j].pricelist)
+					{
+						temp = vectrofstruct[j].pricelist;
+						temp2 = vectrofstruct[j].shopnumber;
+					}
+					else
+					{
+						temp = vectrofstruct[i].pricelist;
+						temp2 = vectrofstruct[i].shopnumber;
+					}
+				}
 			}
 		}
 	}
@@ -181,7 +203,6 @@ Shopping::GetCheapPrice()
 		std::cout << "none" << std::endl;
 	return;
 }
-
 
 
 int main(int argc, char *argv[])
