@@ -7,16 +7,6 @@
 
 using namespace std;
 
-template<typename KeyType, typename ValueType>
-std::pair<KeyType, ValueType> get_max( const std::map<KeyType, ValueType>& x )
-{
-	using pairtype = std::pair<KeyType, ValueType>;
-	return *std::max_element(x.begin(), x.end(), [] (const pairtype & p1, const pairtype & p2)
-	{
-		return p1.second > p2.second;
-	});
-}
-
 
 struct iteminfo
 {
@@ -108,7 +98,6 @@ Shopping::GoShopping()
 	return;
 }
 int x = 0;
-
 void
 Shopping::SearchShopWithItem(std::string filename)
 {
@@ -160,7 +149,9 @@ Shopping::DisplayShopName()
 
 void
 Shopping::GetCheapPrice()
-{	float temp = -1; int temp2;
+{
+	float temp = 0;
+	int temp2;
 	if (x == 1)
 	{
 		temp = vectrofstruct[0].pricelist;
@@ -169,30 +160,31 @@ Shopping::GetCheapPrice()
 	else {
 		for (int i = 0; i < x; ++i)
 		{
-			for (int j = i; j < x; ++j)
+			for (int j = 1 + i; j < x; ++j)
 			{
 				if (vectrofstruct[i].nameofitem != vectrofstruct[j].nameofitem &&
 				        vectrofstruct[i].shopnumber == vectrofstruct[j].shopnumber)
 				{
 					temp = vectrofstruct[i].pricelist + vectrofstruct[j].pricelist;
 					temp2 = vectrofstruct[i].shopnumber;
-
+					break;
 				}
 				if (vectrofstruct[i].nameofitem == vectrofstruct[j].nameofitem &&
 				        vectrofstruct[i].shopnumber != vectrofstruct[j].shopnumber)
 				{
-					if (vectrofstruct[i].pricelist > vectrofstruct[j].pricelist)
+					if (vectrofstruct[i].pricelist < vectrofstruct[j].pricelist)
 					{
-						temp = vectrofstruct[j].pricelist;
+						temp += vectrofstruct[j].pricelist;
 						temp2 = vectrofstruct[j].shopnumber;
 					}
 					else
 					{
-						temp = vectrofstruct[i].pricelist;
+						temp += vectrofstruct[i].pricelist;
 						temp2 = vectrofstruct[i].shopnumber;
 					}
 				}
 			}
+			break;
 		}
 	}
 	if (temp > 0)
@@ -203,6 +195,7 @@ Shopping::GetCheapPrice()
 		std::cout << "none" << std::endl;
 	return;
 }
+
 
 
 int main(int argc, char *argv[])
