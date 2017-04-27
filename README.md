@@ -19,7 +19,7 @@ Instruction to run the Code.
 	./a.out data.csv
 
 
-Attention this executable file take argv[] input, if one run it with argument, the program will crash
+Attention this executable file take argv[] input, if one run it without argument, the program will crash
 stating CORE DUMP.
 
 
